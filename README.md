@@ -1,32 +1,56 @@
-# React + TypeScript + Vite
+# エレベーターシミュレーター
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+エレベーターの操作盤をブラウザーで体験できるアプリです。スマートフォンでも使えます。
 
-Currently, two official plugins are available:
+**[アプリを開く](https://f-mixxx.chu.jp/elevetor/)**
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 使い方
 
-## React Compiler
+1. 最初の画面で建物の階数を選びます。数字を入力して、2〜20階の間で指定することもできます。
+2. 操作盤で行きたい階のボタンを押します。現在の階と移動方向が表示されます。
+3. 到着すると音が鳴ります。移動中は別の階を選べません。
+4. 「別のエレベーターを選ぶ」を押すと、階数を選び直せます。
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+ボタン操作時にも音が鳴ります。音が聞こえないときは、端末の音量、消音モード、音の出力先を確認してください。
 
-## Expanding the Oxlint configuration
+## 自分のパソコンで動かす
 
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
+アプリを使うだけなら、この作業は必要ありません。ソースコードを編集したい人向けの手順です。
 
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+### 準備
+
+- Node.js 22.12以上とnpmをインストールします。
+- このリポジトリをダウンロードまたはクローンし、ターミナルでそのフォルダーを開きます。
+
+### 起動
+
+```bash
+npm ci
+npm run dev
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+ターミナルに表示されたURLをブラウザーで開きます。終了するときはターミナルで `Ctrl + C` を押します。
+
+## 公開用ファイルの作り方
+
+プロジェクトのフォルダーで次を実行します。
+
+```bash
+npm run build
+```
+
+`dist` フォルダーに公開用ファイルが生成されます。FTPで公開する場合は、**`dist` フォルダーの中身**をサーバーの公開先フォルダーにアップロードしてください。`dist` 自体や、プロジェクト直下の `index.html` ではありません。
+
+変更を公開するときもビルドをやり直し、生成された `index.html` と `assets` フォルダーをアップロードします。公開先に既存のファイルがある場合は、上書きする内容を確認してください。`src` や `node_modules` はアップロード不要です。
+
+## 開発に使っているもの
+
+- React：画面と操作
+- TypeScript：プログラム
+- Vite：開発サーバーと公開用ファイルの生成
+
+主なファイル：
+
+- `src/components/Elevator.tsx`：エレベーターの操作と音
+- `src/styles/Elevator.css`：操作盤のデザイン
+- `vite.config.ts`：ビルドの設定
